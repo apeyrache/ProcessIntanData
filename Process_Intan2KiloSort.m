@@ -1,0 +1,60 @@
+function Process_Intan2KiloSort(fbasename,varargin)
+
+% Preprocess raw data from Intan, renames files and folders, concatenate
+% dat files (if multiple) and launches KiloSort.
+%
+%  USAGE
+%
+%    Process_Intan2KiloSort(filebasename,<optional>mergename)
+%
+%    filebasename   a cell array of filebasenames (with or without '.dat' extenstion)
+%    mergename      final concatenated file and folder name (if omitted,
+%                   mergename will be the name of the current folder.
+%
+%    Dependencies:  none
+
+% Copyright (C) 2016 Adrien Peyrache
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+
+%% Parameters
+%script in development to re-reference channels. Use with precautious
+removeNoise = 0; 
+
+if isempty(varargin)
+    [~,mergename,~] = fileparts(pwd);
+else
+    mergename = varargin{1};
+end
+fprintf('Processing %s...\n',mergename);
+
+%% Rename and copy Intant folders
+recList = Process_RenameCopyIntan(fbasename,mergename);
+if isempty(recList)
+    error('No data folders!')
+end
+
+%% Re-reference data if needed, USE WITH PRECAUTIOUS
+if removeNoise
+    for ii=1:length(recList)
+        Process_RemoveMuscleArtifactsFromDat(recList{ii},64,1:64,1:64)
+    end
+end
+
+%% Concatenate Data for Kilosort (or others)
+Process_ConcatenateDatFiles(recList,mergeName)
+
+%% Copy files to new final directory
+mkdir(mergename)
+movefile([mergename '.dat'],mergename,'f')
+copyfile([recList{1} '.xml'],[mergename '.xml'],'f')
+movefile([mergename '.xml'],mergename,'f')
+
+%%Go to final folder and launch Kilosort
+cd(mergename)
+UpdateXml_SpkGrps(mergeName)
+KiloSortWrapper()
+
