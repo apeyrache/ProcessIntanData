@@ -32,10 +32,14 @@ fprintf('Processing %s...\n',mergename);
 
 %% Rename and copy Intant folders
 datFiles = dir([fbasename '*.dat*']);
-recList = cell(length(datFiles),1);
+if isempty(datFiles)
+    error('No dat files!')
+end
 
-if isempty(recList)
-    error('No data folders!')
+recList = cell(length(datFiles),1);
+for ii=1:length(recList)
+    fname       = datFiles(ii).name;
+    recList{ii} = fname(1:end-4); 
 end
 
 %% Re-reference data if needed, USE WITH PRECAUTIOUS
@@ -44,9 +48,9 @@ if removeNoise
         Process_RemoveMuscleArtifactsFromDat(recList{ii},64,1:64,1:64)
     end
 end
-
+keyboard
 %% Concatenate Data for Kilosort (or others)
-Process_ConcatenateDatFiles(recList,mergeName)
+Process_ConcatenateDatFiles(recList,mergename)
 
 %% Copy files to new final directory
 mkdir(mergename)
@@ -56,6 +60,6 @@ movefile([mergename '.xml'],mergename,'f')
 
 %%Go to final folder and launch Kilosort
 cd(mergename)
-UpdateXml_SpkGrps(mergeName)
+%UpdateXml_SpkGrps(mergename)
 KiloSortWrapper()
 

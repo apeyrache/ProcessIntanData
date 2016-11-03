@@ -18,7 +18,7 @@ xmli = strfind(fbasename,'.xml');
 if isempty(xmli)
    fbasename = [fbasename '.xml'];
 end
-rxml = xmltools([fbasename '.xml']);
+rxml = xmltools(fbasename);
 
 rxml = rxml.child(2);
 
