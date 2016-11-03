@@ -1,5 +1,6 @@
 %function [xml, rxml] = LoadXml(FileBase)
-%loads the xml file using xmltools (have to have it in the path)
+%
+% loads the xml file using xmltools (have to have it in the path)
 % rxml returns it's original layout - very messy structure but contains all
 % the xml file contents.
 % xml - is the ouput structure which is backwards compatible to LoadPar
@@ -8,35 +9,20 @@
 % more can be added later (e.g. parameters of the process scripts)
 % this script is written for xml version 1.1 .. older version doesn't work.
 % additions are welcome
-% 
-% By default, fbasename is the name of the directory where the data are, so
-% the exact xml file path should not be put in argument
-% By calling
-% xml = LoadXml(xmlfile,'raw')
-% the xml file specified in argument will be loaded
-% (added by A Peyrache)
 
 function [xml, rxml] = LoadXml(fbasename,varargin)
+
 xml = struct;
 
-%if isempty(varargin)
-%    [fbasename mergedir rootdir] = extractfbasename(fbasename);
-%elseif strcmpi(varargin,'raw')
-%    fprintf('Loading directly xml file')
-%else
-%    error('Unrecognized option')
-%end
-%if xml was in the filebase by chance
 xmli = strfind(fbasename,'.xml');
-if ~isempty(xmli)
-    fbasename = fbasename(1:xmli-1);
+if isempty(xmli)
+   fbasename = [fbasename '.xml'];
 end
 rxml = xmltools([fbasename '.xml']);
 
 rxml = rxml.child(2);
 
 % from this level all children are the different parameters fields
-
 xml.FileName = fbasename;
 
 for i=1:length(rxml.child)
