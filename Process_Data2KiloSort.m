@@ -55,8 +55,7 @@ Process_ConcatenateDatFiles(recList,mergename)
 %% Copy files to new final directory
 mkdir(mergename)
 movefile([mergename '.dat'],mergename,'f')
-copyfile([recList{1} '.xml'],[mergename '.xml'],'f')
-movefile([mergename '.xml'],mergename,'f')
+copyfile([recList{1} '.xml'],fullfile(mergename,[mergename '.xml']),'f')
 
 %%Go to final folder and launch Kilosort
 cd(mergename)

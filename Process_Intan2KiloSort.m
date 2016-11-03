@@ -1,7 +1,7 @@
 function Process_Intan2KiloSort(fbasename,varargin)
 
 % Preprocess raw data from Intan, renames files and folders, concatenate
-% dat files (if multiple) and launches KiloSort.
+% dat files (if multiple) and runs KiloSort.
 %
 %  USAGE
 %
@@ -11,7 +11,7 @@ function Process_Intan2KiloSort(fbasename,varargin)
 %    mergename      final concatenated file and folder name (if omitted,
 %                   mergename will be the name of the current folder.
 %
-%    Dependencies:  none
+%    Dependencies:  KiloSortWrapper, KiloSort
 
 % Copyright (C) 2016 Adrien Peyrache
 %
