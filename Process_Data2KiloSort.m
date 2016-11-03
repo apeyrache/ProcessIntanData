@@ -1,6 +1,7 @@
 function Process_Data2KiloSort(fbasename,varargin)
 
 % Preprocess raw data recordings, concatenate dat files (if multiple) and launches KiloSort.
+% 
 %  USAGE
 %
 %    Process_Data2KiloSort(filebasename,<optional>mergename)
