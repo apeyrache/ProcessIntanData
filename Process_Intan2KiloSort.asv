@@ -48,15 +48,14 @@ end
 Process_ConcatenateDatFiles(recList,mergename)
 
 %% Copy files to new final directory
-if length(recList)>1
-    mkdir(mergename)
-end
+if leng
+mkdir(mergename)
 movefile([mergename '.dat'],mergename,'f')
 copyfile([recList{1} '.xml'],[mergename '.xml'],'f')
 movefile([mergename '.xml'],mergename,'f')
 
 %%Go to final folder and launch Kilosort
 cd(mergename)
-UpdateXml_SpkGrps(mergename)
+UpdateXml_SpkGrps(mergeName)
 KiloSortWrapper()
 

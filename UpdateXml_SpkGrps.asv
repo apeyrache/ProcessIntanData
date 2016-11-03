@@ -70,7 +70,7 @@ rxml = xmltools([fbasename '.xml']);
 %keyboard
 
 ix = 1;
-
+keyboard
 while ~strcmpi(rxml.child(2).child(ix).tag,'spikeDetection')
     disp(rxml.child(2).child(ix).tag)
     ix = ix+1;
@@ -80,7 +80,7 @@ nCh = length(rxml.child(2).child(ix).child(1).child);
 for ii=1:nCh
     %if length(rxml.child(2).child(ix).child(1).child(ii).child) == 1
     ixChannels = 1;
-        while ~strcmpi(rxml.child(2).child(ix).child(1).child(ii).child(ixChannels).tag,'channels')
+        while ~strcmp(rxml.child(2).child(ix).child(1).child(ii).child(ixChannels).tag,'channels')
             ixChannels = ixChannels + 1;
         end
         disp(ixChannels)
