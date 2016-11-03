@@ -1,7 +1,7 @@
 function Process_Intan2KiloSort(fbasename,varargin)
 
 % Preprocess raw data from Intan, renames files and folders, concatenate
-% dat files (if multiple) and launches KiloSort.
+% dat files (if multiple) and runs KiloSort.
 %
 %  USAGE
 %
@@ -11,7 +11,7 @@ function Process_Intan2KiloSort(fbasename,varargin)
 %    mergename      final concatenated file and folder name (if omitted,
 %                   mergename will be the name of the current folder.
 %
-%    Dependencies:  none
+%    Dependencies:  KiloSortWrapper, KiloSort
 
 % Copyright (C) 2016 Adrien Peyrache
 %
@@ -21,7 +21,8 @@ function Process_Intan2KiloSort(fbasename,varargin)
 % (at your option) any later version.
 
 %% Parameters
-%script in development to re-reference channels. Use with precautious
+%script in development to re-reference channels. Be cautious, may lacks
+%dependencies
 removeNoise = 0; 
 
 if isempty(varargin)
@@ -48,14 +49,15 @@ end
 Process_ConcatenateDatFiles(recList,mergename)
 
 %% Copy files to new final directory
-if leng
-mkdir(mergename)
+if length(recList)>1
+    mkdir(mergename)
+end
 movefile([mergename '.dat'],mergename,'f')
 copyfile([recList{1} '.xml'],[mergename '.xml'],'f')
 movefile([mergename '.xml'],mergename,'f')
 
 %%Go to final folder and launch Kilosort
 cd(mergename)
-UpdateXml_SpkGrps(mergeName)
+UpdateXml_SpkGrps(mergename)
 KiloSortWrapper()
 

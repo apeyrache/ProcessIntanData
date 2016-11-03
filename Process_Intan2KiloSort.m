@@ -1,6 +1,6 @@
 function Process_Intan2KiloSort(fbasename,varargin)
 
-% Preprocess raw data from Intan, renames files and folders, concatenate
+% Pprocesses raw data from Intan, renames files and folders, concatenates
 % dat files (if multiple) and runs KiloSort.
 %
 %  USAGE
@@ -21,7 +21,8 @@ function Process_Intan2KiloSort(fbasename,varargin)
 % (at your option) any later version.
 
 %% Parameters
-%script in development to re-reference channels. Use with precautious
+%script in development to re-reference channels. Be cautious, may lacks
+%dependencies
 removeNoise = 0; 
 
 if isempty(varargin)
