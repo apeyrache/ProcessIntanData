@@ -48,7 +48,7 @@ if removeNoise
         Process_RemoveMuscleArtifactsFromDat(recList{ii},64,1:64,1:64)
     end
 end
-keyboard
+
 %% Concatenate Data for Kilosort (or others)
 Process_ConcatenateDatFiles(recList,mergename)
 
